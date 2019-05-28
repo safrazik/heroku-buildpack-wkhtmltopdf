@@ -11,6 +11,8 @@ DEB_FILENAME=$WKHTMLTOX_DIR/$(basename $WKHTMLTOPDF_URL)
 WKHTMLTOPDF_PATH=$WKHTMLTOX_DIR/usr/local
 DESTINATION=$BUILD_DIR/bin  # will be `/app/bin` inside dyno
 
+BIN_DIR=$(cd $(dirname $0); pwd)
+FONTS_DIR=$(cd "$BIN_DIR/../fonts"; pwd)
 
 # Download and extract wkhtmltopdf
 if [ ! -d "$WKHTMLTOPDF_PATH" ]; then
@@ -37,3 +39,9 @@ if [ ! -f "$DESTINATION/wkhtmltopdf" ]; then
 
 	mv $WKHTMLTOPDF_PATH/bin/* $DESTINATION
 fi
+
+echo "-----> Installing fonts"
+mkdir -p $BUILD_DIR/.fonts
+ls $FONTS_DIR
+cp $FONTS_DIR/* $BUILD_DIR/.fonts/
+fc-cache -f $BUILD_DIR/.fonts
