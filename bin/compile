@@ -15,7 +15,10 @@ BIN_DIR=$(cd $(dirname $0); pwd)
 FONTS_DIR=$(cd "$BIN_DIR/../fonts"; pwd)
 
 # Download and extract wkhtmltopdf
-if [ ! -d "$WKHTMLTOPDF_PATH" ]; then
+# if [ ! -d "$WKHTMLTOPDF_PATH" ]; then
+if [ -f $WKHTMLTOPDF_PATH/bin/wkhtmltopdf ] && [ -f $WKHTMLTOPDF_PATH/bin/wkhtmltoimage ]; then
+  echo "-----> Using wkhtmltopdf and wkhtmltoimage binaries from cache"
+else
 	echo '-----> Downloading wkhtmltopdf'
 	mkdir -p $(dirname $DEB_FILENAME)
 	wget --quiet --continue --output-document="$DEB_FILENAME" "$WKHTMLTOPDF_URL"
@@ -30,7 +33,7 @@ if [ ! -d "$WKHTMLTOPDF_PATH" ]; then
 fi
 
 # Move files to /app/bin
-if [ ! -f "$DESTINATION/wkhtmltopdf" ]; then
+if [ ! -f "$DESTINATION/wkhtmltopdf" ] && [ ! -f "$DESTINATION/wkhtmltoimage" ]; then
 	echo '-----> Moving wkhtmltopdf binaries to /app/bin'
 
 	if [ ! -d "$DESTINATION" ]; then
