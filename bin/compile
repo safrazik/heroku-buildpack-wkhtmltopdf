@@ -22,7 +22,7 @@ if [ ! -d "$WKHTMLTOPDF_PATH" ]; then
 	cd "$WKHTMLTOX_DIR"
 	ar vx "$DEB_FILENAME"
 	# tar data.tar.gz
-	tar --xz --extract --file "data.tar.gz"
+	tar --xz --extract --file "data.tar.xz"
 	# tar --xz --extract --file "$XZ_FILENAME" --directory "$CACHE_DIR"
 	rm "$DEB_FILENAME"
 fi
